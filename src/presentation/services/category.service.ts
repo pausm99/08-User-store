@@ -18,12 +18,25 @@ export class CategoryService {
 			await category.save()
 
 			return {
-                id: category.id,
-                name: category.name,
-                available: category.available,
-            }
+				id: category.id,
+				name: category.name,
+				available: category.available,
+			}
 		} catch (error) {
 			throw CustomError.internalServer(`${error}`)
+		}
+	}
+
+	async getCategores() {
+		try {
+			const categories = await CategoryModel.find().lean()
+			return categories.map((category: any) => ({
+				id: category._id.toString(),
+				name: category.name,
+				available: category.available,
+			}))
+		} catch (error) {
+			throw CustomError.internalServer('Internal server error')
 		}
 	}
 }
