@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
 	},
 	price: {
 		type: Number,
-		default: 0
+		default: 0,
 	},
 	description: {
 		type: String,
@@ -26,6 +26,14 @@ const productSchema = new mongoose.Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Category',
 		required: true,
+	},
+})
+
+productSchema.set('toJSON', {
+	virtuals: true,
+	versionKey: false,
+	transform: function (doc: any, ret: any, options: any) {
+		delete (ret as any)._id
 	},
 })
 
